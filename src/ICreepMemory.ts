@@ -1,4 +1,7 @@
+import { Role } from "Roles";
+
 export interface ICreepMemory {
-    role: string,
-    atWork: boolean
+    role: Role,
+    atWork?: boolean,
+    energySource?: number
 }
