@@ -9,18 +9,31 @@ export function run(creep: Creep) {
     }
     if(creep.memory.atWork) {
         creep.memory.energySource = undefined
-        let constructionSites = creep.room.find(FIND_CONSTRUCTION_SITES)
-        if(constructionSites.length) {
-            if(creep.build(constructionSites[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(constructionSites[0], { reusePath: 10, range: 3, visualizePathStyle: {stroke: '#E64A19'}})
+        let toRepair = creep.room.find(FIND_STRUCTURES, {filter: structure => {
+            return (structure instanceof StructureContainer ||
+            structure instanceof StructureStorage) &&
+            structure.hits < structure.hitsMax
+        }})
+        if(toRepair.length) {
+            if (creep.repair(toRepair[0]) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(toRepair[0])
             } else {
-                creep.say("🚧build")
+                creep.say("🔨repair")
             }
         } else {
-            if (creep.room.controller && (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE || creep.pos.getRangeTo(creep.room.controller) > 1)) {
-                creep.moveTo(creep.room.controller, { reusePath: 10, range: 1, visualizePathStyle: { stroke: '#E64A19' } });
+            let constructionSites = creep.room.find(FIND_CONSTRUCTION_SITES)
+            if(constructionSites.length) {
+                if(creep.build(constructionSites[0]) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(constructionSites[0], { range: 3, visualizePathStyle: {stroke: '#E64A19'}})
+                } else {
+                    creep.say("🚧build")
+                }
             } else {
-                creep.say("⚡upgrade")
+                if (creep.room.controller && (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE || creep.pos.getRangeTo(creep.room.controller) > 1)) {
+                    creep.moveTo(creep.room.controller, { range: 1, visualizePathStyle: { stroke: '#E64A19' } });
+                } else {
+                    creep.say("⚡upgrade")
+                }
             }
         }
     } else {
