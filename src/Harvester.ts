@@ -10,7 +10,7 @@ export function run(creep: Creep) {
         let source = Game.getObjectById(creep.memory?.energySource?.id)
         if (source instanceof Source) {
             if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(source, { range: 1, visualizePathStyle: { stroke: '#E64A19' } })
+                creep.moveTo(source, { reusePath: 10, range: 1, visualizePathStyle: { stroke: '#E64A19' } })
             } else {
                 creep.say("🌾harvest")
             }
@@ -28,13 +28,13 @@ export function run(creep: Creep) {
         })
         if (targets.length > 0) {
             if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(targets[0], { range: 1, visualizePathStyle: { stroke: '#FFF' } })
+                creep.moveTo(targets[0], { reusePath: 10, range: 1, visualizePathStyle: { stroke: '#FFF' } })
             } else {
                 creep.say("🚢transfer")
             }
         } else {
             if (creep.room.controller && (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE || creep.pos.getRangeTo(creep.room.controller) > 1)) {
-                creep.moveTo(creep.room.controller, { range: 1, visualizePathStyle: { stroke: '#E64A19' } });
+                creep.moveTo(creep.room.controller, { reusePath: 10, range: 1, visualizePathStyle: { stroke: '#E64A19' } });
             } else {
                 creep.say("⚡upgrade")
             }
