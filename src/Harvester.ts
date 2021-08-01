@@ -1,11 +1,19 @@
+import { EnergySource } from "IEnergySource";
+
 export function run(creep: Creep) {
     if (creep.store.getFreeCapacity() > 0) {
         let sources = creep.room.find(FIND_SOURCES);
-        creep.memory.energySource = creep.memory.energySource == undefined ? Math.floor(Math.random() * sources.length) : creep.memory.energySource
-        if (creep.harvest(sources[creep.memory.energySource]) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(sources[creep.memory.energySource], { range: 1, visualizePathStyle: { stroke: '#E64A19' } })
-        } else {
-            creep.say("🌾harvest")
+        creep.memory.energySource = creep.memory.energySource == undefined ? {
+            type: EnergySource.SOURCE,
+            id: sources[Math.floor(Math.random() * sources.length)].id
+        } : creep.memory.energySource
+        let source = Game.getObjectById(creep.memory?.energySource?.id)
+        if (source instanceof Source) {
+            if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
+                creep.moveTo(source, { range: 1, visualizePathStyle: { stroke: '#E64A19' } })
+            } else {
+                creep.say("🌾harvest")
+            }
         }
     } else {
         creep.memory.energySource = undefined
@@ -13,7 +21,8 @@ export function run(creep: Creep) {
             filter: (structure: AnyStructure) => {
                 return (structure instanceof StructureExtension ||
                     structure instanceof StructureSpawn ||
-                    structure instanceof StructureTower) &&
+                    structure instanceof StructureTower ||
+                    structure instanceof StructureContainer) &&
                     structure.store.getFreeCapacity(RESOURCE_ENERGY) > 0
             }
         })

@@ -1,7 +1,9 @@
+import IEnergySource from "IEnergySource";
 import { Role } from "Roles";
 
 export interface ICreepMemory {
     role: Role,
     atWork?: boolean,
-    energySource?: number
+    energySource?: IEnergySource
+    shouldUpgrade?: boolean
 }

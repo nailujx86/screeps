@@ -1,18 +1,17 @@
-import _ from "lodash"
 import IBuildingPlan from "IBuildingPlan"
 import { Role } from "Roles"
 import { bodycost } from "Util"
 
 const harvester:IBuildingPlan = {
-    configurations: [[WORK, CARRY, MOVE, MOVE], [WORK, WORK, CARRY, MOVE, MOVE]],
+    configurations: [[WORK, CARRY, MOVE, MOVE], [WORK, WORK, CARRY, MOVE, MOVE], [WORK, WORK, CARRY, CARRY, MOVE, MOVE]],
     role: Role.HARVESTER,
-    desired: 3
+    desired: 5
 }
 
 const builder:IBuildingPlan = {
-    configurations: [[WORK, CARRY, MOVE, MOVE], [WORK, WORK, CARRY, MOVE, MOVE]],
+    configurations: [[WORK, CARRY, MOVE, MOVE], [WORK, WORK, CARRY, MOVE, MOVE], [WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE]],
     role: Role.BUILDER,
-    desired: 3
+    desired: 5
 }
 const buildingPlans:IBuildingPlan[] = [harvester, builder]
 
