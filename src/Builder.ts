@@ -12,8 +12,8 @@ export function run(creep: Creep) {
         let toRepair = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
             return (structure instanceof StructureContainer ||
             structure instanceof StructureStorage ||
-            structure instanceof StructureWall) &&
-            structure.hits < structure.hitsMax
+            (structure instanceof StructureWall && structure.hits < 150000)) &&
+            structure.hits < (structure.hitsMax / 2)
         }})
         if(toRepair.length) {
             if (creep.repair(toRepair[0]) == ERR_NOT_IN_RANGE) {
