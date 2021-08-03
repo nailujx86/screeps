@@ -9,14 +9,15 @@ export function run(creep: Creep) {
     }
     if(creep.memory.atWork) {
         creep.memory.energySource = undefined
-        let toRepair = creep.room.find(FIND_STRUCTURES, {filter: structure => {
+        let toRepair = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
             return (structure instanceof StructureContainer ||
-            structure instanceof StructureStorage) &&
+            structure instanceof StructureStorage ||
+            structure instanceof StructureWall) &&
             structure.hits < structure.hitsMax
         }})
         if(toRepair.length) {
             if (creep.repair(toRepair[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(toRepair[0])
+                creep.moveTo(toRepair[0], {range: 3, visualizePathStyle: {stroke: "#0F0F0F"}})
             } else {
                 creep.say("🔨repair")
             }
