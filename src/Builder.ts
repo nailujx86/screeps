@@ -11,7 +11,7 @@ export function run(creep: Creep) {
         creep.memory.energySource = undefined
         let toRepair = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
             return (structure instanceof StructureContainer ||
-            structure instanceof StructureStorage ||
+            structure instanceof StructureStorage || structure instanceof StructureRoad || 
             (structure instanceof StructureWall && structure.hits < 150000)) &&
             structure.hits < (structure.hitsMax / 2)
         }})
