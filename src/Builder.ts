@@ -9,13 +9,11 @@ export function run(creep: Creep) {
     }
     if(creep.memory.atWork) {
         creep.memory.energySource = undefined
-        let toRepair = creep.room.find(FIND_STRUCTURES, {filter: (structure) => {
-            return (structure instanceof StructureContainer ||
-            structure instanceof StructureStorage || structure instanceof StructureRoad || 
-            (structure instanceof StructureWall && structure.hits < 150000)) &&
-            structure.hits < (structure.hitsMax / 2)
-        }})
-        if(toRepair.length) {
+        let toRepair = Object.keys(Memory.structures).filter(val => {
+            return Memory.structures[val].needsRepair && Game.getObjectById(val as Id<Structure>)
+        }).map(val => Game.getObjectById(val as Id<Structure>))
+        //console.log(toRepair)
+        if(toRepair.length && toRepair[0] instanceof Structure) {
             if (creep.repair(toRepair[0]) == ERR_NOT_IN_RANGE) {
                 creep.moveTo(toRepair[0], {range: 3, visualizePathStyle: {stroke: "#0F0F0F"}})
             } else {

@@ -1,9 +1,9 @@
 export function checkForRepair(structures: Structure[]) {
     structures.forEach(structure => {
         let needsRepairCurrently = structure.memory.needsRepair ?? false
-        if (structure.hits < (structure.hitsMax / 3))
+        if (structure instanceof StructureWall && structure.hits < 1500000 || !(structure instanceof StructureWall) && structure.hits < (structure.hitsMax / 3))
             structure.memory.needsRepair = true
-        if ((structure.hits / structure.hitsMax) > 0.5 && needsRepairCurrently)
+        if (((structure.hits / structure.hitsMax) > 0.5 || structure instanceof StructureWall && structure.hits >= 150000) && needsRepairCurrently)
             structure.memory.needsRepair = false
     })
 }
