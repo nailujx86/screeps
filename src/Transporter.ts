@@ -1,4 +1,4 @@
-import { EnergySource } from "IEnergySource";
+import { EnergySource } from "interfaces/IEnergySource";
 
 const priority = { StructureTower: 0, StructureExtension: 1, StructureContainer: 2, StructureSpawn: 3 }
 

@@ -1,4 +1,4 @@
-import { ICreepMemory } from "ICreepMemory"
+import { ICreepMemory } from "interfaces/ICreepMemory"
 import * as spawner from "Spawn"
 import * as harvester from "Harvester"
 import * as builder from "Builder"

@@ -1,4 +1,4 @@
-import { EnergySource } from "IEnergySource";
+import { EnergySource } from "interfaces/IEnergySource";
 
 export function run(creep: Creep) {
     if (creep.store.getFreeCapacity() > 0) {

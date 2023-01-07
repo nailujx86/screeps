@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "lib": ["esnext"],
+        "target": "ES6",
+        "moduleResolution": "Node",
+        "outDir": "dist",
+        "baseUrl": "build/",
+        "sourceMap": true,
+        "strict": true,
+        "experimentalDecorators": true,
+        "noImplicitReturns": true,
+        "allowSyntheticDefaultImports": true,
+        "allowUnreachableCode": false,
+        "esModuleInterop": true,
+        "allowJs": true
+    },
+    "include": [
+        "build"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

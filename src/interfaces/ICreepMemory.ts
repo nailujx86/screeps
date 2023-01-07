@@ -1,4 +1,4 @@
-import IEnergySource from "IEnergySource";
+import IEnergySource from "interfaces/IEnergySource";
 import { Role } from "Roles";
 
 export interface ICreepMemory {

@@ -1,4 +1,4 @@
-import IBuildingPlan from "IBuildingPlan"
+import IBuildingPlan from "interfaces/IBuildingPlan"
 import { Role } from "Roles"
 import { bodycost } from "Util"
 

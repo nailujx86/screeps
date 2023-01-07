@@ -1,4 +1,4 @@
-import { EnergySource } from "IEnergySource"
+import { EnergySource } from "interfaces/IEnergySource"
 
 export function run(creep: Creep) {
     if(creep.memory.atWork && creep.store[RESOURCE_ENERGY] == 0) {
