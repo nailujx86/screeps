@@ -72,11 +72,14 @@ export const loop = () => {
         spawner.visual()
 
         for (let name in Game.creeps) {
-            var creep = Game.creeps[name]
-            if (creep.memory.role == Role.HARVESTER) {
-                harvester.run(creep)
-            } else if (creep.memory.role == Role.BUILDER) {
-                builder.run(creep)
+            let creep = Game.creeps[name]
+            switch(creep.memory.role) {
+                case Role.HARVESTER:
+                    harvester.run(creep)
+                    break
+                case Role.BUILDER:
+                    builder.run(creep)
+                    break
             }
         }
     })

@@ -12,12 +12,14 @@ export function run(creep: Creep) {
         let toRepair = Object.keys(Memory.structures).filter(val => {
             return Memory.structures[val].needsRepair && Game.getObjectById(val as Id<Structure>)
         }).map(val => Game.getObjectById(val as Id<Structure>))
-        //console.log(toRepair)
+        //console.log("TO REPAIR: " + creep.name + " " + toRepair)
         if(toRepair.length && toRepair[0] instanceof Structure) {
-            if (creep.repair(toRepair[0]) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(toRepair[0], {range: 3, visualizePathStyle: {stroke: "#0F0F0F"}})
+            let code = creep.repair(toRepair[0])
+            if (code == ERR_NOT_IN_RANGE) {
+                creep.moveTo(toRepair[0], {range: 2, visualizePathStyle: {stroke: "#0F0F0F"}})
             } else {
                 creep.say("🔨repair")
+                console.log(`Creep ${creep.name} is repairing ${toRepair[0].structureType} at ${toRepair[0].pos.x}, ${toRepair[0].pos.y}. Code: ${code}`)
             }
         } else {
             let constructionSites = creep.room.find(FIND_CONSTRUCTION_SITES)
