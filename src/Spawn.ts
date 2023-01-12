@@ -18,6 +18,11 @@ const buildingPlans: IBuildingPlan[] = [harvester, builder]
 // Sort the plans by descending cost
 buildingPlans.forEach(plan => { plan.configurations.sort((a, b) => bodycost(b) - bodycost(a)) })
 
+/**
+ * Sort the building plans by the ratio of existing creeps to desired creeps. This way, the
+ * most needed creeps are built first.
+ * @param plans The building plans to sort
+ */ 
 function sortPlansByDesireRatio(plans: Array<IBuildingPlan>): IBuildingPlan[] {
     const creepsByRole = Object.keys(Game.creeps).reduce((acc, name) => {
         let role = Game.creeps[name].memory.role
@@ -31,17 +36,20 @@ function sortPlansByDesireRatio(plans: Array<IBuildingPlan>): IBuildingPlan[] {
 
 export function spawnCreeps() {
     let availableEnergy = Game.spawns['Spawn1'].room.energyAvailable
-    sortPlansByDesireRatio(buildingPlans).forEach((plan, _index) => {
+    for (let plan of sortPlansByDesireRatio(buildingPlans)) {
+        console.log(`Trying to build: ${Role[plan.role]} with ${availableEnergy} energy. Cheapest plan costs: ${bodycost(plan.configurations[plan.configurations.length - 1])}.`)
         let config = plan.configurations.find(conf => bodycost(conf) <= availableEnergy)
         if (config) { // Config buildable with current resources found
+            console.log("Building: " + plan.role)
             let count = Object.keys(Game.creeps).filter(key => Game.creeps[key].memory.role == plan.role).length
             if (count < plan.desired) { // Too little built
                 Game.spawns['Spawn1'].spawnCreep(config, Role[plan.role] + Game.time, {
                     memory: { role: plan.role, atWork: false }
                 })
+                return; // Only build one creep per tick
             }
         }
-    })
+    }
 }
 
 export function visual() {
