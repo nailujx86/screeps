@@ -1,0 +1,1 @@
+export const ENERGY_TRANSFER_THRESHOLD = 20 // When a creep should stop transfer energy to a structure

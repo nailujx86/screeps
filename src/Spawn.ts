@@ -11,7 +11,7 @@ const harvester: IBuildingPlan = {
 const builder: IBuildingPlan = {
     configurations: [[WORK, CARRY, MOVE, MOVE], [WORK, WORK, CARRY, MOVE, MOVE], [WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE], [WORK, WORK, WORK, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE]],
     role: Role.BUILDER,
-    desired: 5
+    desired: 8
 }
 const buildingPlans: IBuildingPlan[] = [harvester, builder]
 
@@ -37,7 +37,7 @@ function sortPlansByDesireRatio(plans: Array<IBuildingPlan>): IBuildingPlan[] {
 export function spawnCreeps() {
     let availableEnergy = Game.spawns['Spawn1'].room.energyAvailable
     for (let plan of sortPlansByDesireRatio(buildingPlans)) {
-        console.log(`Trying to build: ${Role[plan.role]} with ${availableEnergy} energy. Cheapest plan costs: ${bodycost(plan.configurations[plan.configurations.length - 1])}.`)
+        console.log(`Considering to build: ${Role[plan.role]} with ${availableEnergy} energy. Cheapest plan costs: ${bodycost(plan.configurations[plan.configurations.length - 1])}.`)
         let config = plan.configurations.find(conf => bodycost(conf) <= availableEnergy)
         if (config) { // Config buildable with current resources found
             console.log("Building: " + plan.role)

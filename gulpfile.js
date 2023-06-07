@@ -20,7 +20,7 @@ function cleanBuild(cb) {
 
 function prepareTS() {
     return gulp.src(["src/**/*.ts", "src/**/*.js"])
-        .pipe(replace(/import\s*(.+?)\s*from\s*"[\.\/]*(.+?)"/g, (match, p1, p2) => { // replace relative imports with absolute imports
+        .pipe(replace(/import\s*(.+?)\s*from\s*"[\.\/]*(.+?)"/g, (match, p1, p2) => { // replace absolute imports with flattened imports
             return `import ${p1} from "${p2.replace("\/", "_")}";`
         })).pipe(rename((path) => { // flatten directory structure
             path.basename = path.dirname != '.' ? path.dirname.replace(/\//g, "_") + "_" + path.basename : path.basename

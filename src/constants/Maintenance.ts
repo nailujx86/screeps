@@ -1,0 +1,1 @@
+export const WALL_HITS = 150000 // When a wall should be repaired
