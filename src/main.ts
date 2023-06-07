@@ -1,8 +1,6 @@
 import { ICreepMemory } from "interfaces/ICreepMemory"
 import * as spawner from "Spawn"
-import * as harvester from "Harvester"
-import * as builder from "Builder"
-import { Role } from "Roles"
+import screeps from "blueprints/blueprints"
 import profiler from "screeps-profiler"
 import { defend } from "Defense"
 import { checkForRepair, getRepairableStructures } from "Maintenance"
@@ -73,14 +71,7 @@ export const loop = () => {
 
         for (let name in Game.creeps) {
             let creep = Game.creeps[name]
-            switch(creep.memory.role) {
-                case Role.HARVESTER:
-                    harvester.run(creep)
-                    break
-                case Role.BUILDER:
-                    builder.run(creep)
-                    break
-            }
+            screeps.find(creeper => creep.memory.role == creeper.role)?.run(creep);
         }
     })
 }

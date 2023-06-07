@@ -7,5 +7,5 @@ export enum EnergySource {
 
 export default interface IEnergySource {
     type: EnergySource,
-    id: Id<Source | StructureStorage | StructureContainer | Resource>
+    id: Id<Source | StructureStorage | StructureContainer | Resource | Tombstone>
 }
