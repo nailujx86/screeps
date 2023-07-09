@@ -13,10 +13,12 @@ const harvester: IScreep = {
 
     run(creep: Creep) {
         if (creep.store.getFreeCapacity() > 0) {
-            let drops = creep.room.find(FIND_DROPPED_RESOURCES).filter(drop => drop.resourceType == RESOURCE_ENERGY && drop.amount > ENERGY_TRANSFER_THRESHOLD)
-            let tombstones = creep.room.find(FIND_TOMBSTONES).filter(tombstone => tombstone.store.energy >= ENERGY_TRANSFER_THRESHOLD)
-            let sources = creep.room.find(FIND_SOURCES).filter(source => source.energy > 0)
             if (creep.memory.energySource == undefined || sourceEmpty(creep.memory.energySource)) { // Stores the source in the creeps memory so we don't have to search for it every tick
+                let drops = creep.room.find(FIND_DROPPED_RESOURCES).filter(drop => drop.resourceType == RESOURCE_ENERGY && drop.amount > ENERGY_TRANSFER_THRESHOLD)
+                let tombstones = creep.room.find(FIND_TOMBSTONES).filter(tombstone => tombstone.store.energy >= ENERGY_TRANSFER_THRESHOLD)
+                let sources = creep.room.find(FIND_SOURCES).filter(source => source.energy > 0)
+            
+                
                 let source: IEnergySource
                 if (tombstones.length) { // someone died.. :( lets harvest from it first...
                     source = { 

@@ -19,7 +19,8 @@ function sortBlueprintsByDesireRatio(plans: Array<IScreep>): IScreep[] {
         acc[role] = (acc[role] || []).concat(Game.creeps[name])
         return acc;
     }, {} as { [key in Role]: Creep[] })
-    return blueprints.sort((a, b) => {
+
+    return [...plans].sort((a, b) => {
         return (creepsByRole[a.role]?.length / a.buildingPlan.desired) - (creepsByRole[b.role]?.length / b.buildingPlan.desired)
     })
 }
