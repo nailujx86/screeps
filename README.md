@@ -31,3 +31,8 @@ module.exports = {
     branch: 'default' // the screeps branch to commit to
 }
 ```
+## todos
+- [ ] support storing energy in containers
+- [ ] role: automatic road builder
+- [ ] support for extensions
+- [ ] support for links
