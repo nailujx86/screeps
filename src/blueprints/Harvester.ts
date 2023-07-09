@@ -12,7 +12,13 @@ const harvester: IScreep = {
     },
 
     run(creep: Creep) {
-        if (creep.store.getFreeCapacity() > 0) {
+        if(creep.memory.atWork && creep.store[RESOURCE_ENERGY] == 0) {
+            creep.memory.atWork = false 
+        }
+        if(!creep.memory.atWork && creep.store.getFreeCapacity() == 0) {
+            creep.memory.atWork = true
+        }
+        if (!creep.memory.atWork) { // not working, we have to collect energy..
             if (creep.memory.energySource == undefined || sourceEmpty(creep.memory.energySource)) { // Stores the source in the creeps memory so we don't have to search for it every tick
                 let drops = creep.room.find(FIND_DROPPED_RESOURCES).filter(drop => drop.resourceType == RESOURCE_ENERGY && drop.amount > ENERGY_TRANSFER_THRESHOLD)
                 let tombstones = creep.room.find(FIND_TOMBSTONES).filter(tombstone => tombstone.store.energy >= ENERGY_TRANSFER_THRESHOLD)
@@ -59,8 +65,8 @@ const harvester: IScreep = {
                     creep.say("🧺withdraw")
                 }
             }
-        } else {
-            creep.memory.energySource = undefined
+        } else { // working..
+            creep.memory.energySource = undefined // Reset energy source, so we search for a new source whenever the creep is empty again.
             let targets = creep.room.find(FIND_STRUCTURES, {
                 filter: (structure: AnyStructure) => {
                     return (structure instanceof StructureExtension ||
